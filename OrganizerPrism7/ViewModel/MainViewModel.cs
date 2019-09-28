@@ -1,6 +1,7 @@
 ﻿using Autofac.Features.Indexed;
 using OrganizerPrism7.UI.Event;
 using OrganizerPrism7.UI.Views.Services;
+using OrganizerPrism7.UI.ViewModel;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -14,16 +15,17 @@ namespace OrganizerPrism7.UI.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private readonly IEventAggregator _eventAggregator;
-        private IIndex<string, IDetailViewModel> _detailViewModelCreator;
+        private IDetailViewModelFactory _detailViewModelFactory;
+
         private readonly IMessageDialogService _messageDialogService;
 
         public MainViewModel(INavigationViewModel navigationViewModel,
-            IIndex<string, IDetailViewModel> detailViewModelCreator,
+            IDetailViewModelFactory detailViewModelFactory,
             IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService)
         {
             _eventAggregator = eventAggregator;
-            _detailViewModelCreator = detailViewModelCreator;
+            _detailViewModelFactory = detailViewModelFactory;
             _messageDialogService = messageDialogService;
 
             DetailViewModels = new ObservableCollection<IDetailViewModel>();
@@ -71,7 +73,7 @@ namespace OrganizerPrism7.UI.ViewModel
 
             if (detailViewModel == null)
             {
-                detailViewModel = _detailViewModelCreator[args.ViewModelName];
+                detailViewModel = _detailViewModelFactory.GetDetailViewModel(args.ViewModelName);
                 try
                 {
                     await detailViewModel.LoadAsync(args.Id);
