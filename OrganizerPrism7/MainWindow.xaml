@@ -1,0 +1,75 @@
+﻿<Controls:MetroWindow x:Class="OrganizerPrism7.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:OrganizerPrism7.UI"
+        xmlns:view="clr-namespace:OrganizerPrism7.UI.Views"
+        xmlns:viewModel="clr-namespace:OrganizerPrism7.UI.ViewModel"
+        mc:Ignorable="d" Icon="icon.ico"
+        Title="Organizer" Height="700" Width="1000"
+        BorderBrush="{DynamicResource AccentColorBrush}"
+        WindowStartupLocation="CenterScreen"
+        FontSize="20">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:PersonDetailViewModel}">
+            <view:PersonDetailView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:MeetingDetailViewModel}">
+            <view:MeetingDetailView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ProgrammingLanguageDetailViewModel}">
+            <view:ProgrammingLanguageDetailView/>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.ColumnSpan="2" FontSize="20">
+            <MenuItem Header="Create">
+                <MenuItem Header="New Person" Command="{Binding CreateNewDetailCommand}" 
+                          CommandParameter="{x:Type viewModel:PersonDetailViewModel}"/>
+                <MenuItem Header="New Meeting" Command="{Binding CreateNewDetailCommand}" 
+                          CommandParameter="{x:Type viewModel:MeetingDetailViewModel}"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Programming Languages" Command="{Binding OpenSingleDetailViewCommand}" 
+                          CommandParameter="{x:Type viewModel:ProgrammingLanguageDetailViewModel}"/>
+            </MenuItem>
+        </Menu>
+        <view:NavigationView Grid.Row="1"
+                             DataContext="{Binding NavigationViewModel}"/>
+        <TabControl Grid.Row="1"
+                    Grid.Column="1"
+                    ItemsSource="{Binding DetailViewModels}"
+                    SelectedItem="{Binding SelectedDetailViewModel, Mode=TwoWay}">
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="TabItem"
+                       BasedOn="{StaticResource {x:Type TabItem}}">
+                    <Setter Property="Background" Value="WhiteSmoke"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Style>
+            </TabControl.ItemContainerStyle>
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Title}" FontSize="20" />
+                        <TextBlock Text="*" Visibility="{Binding HasChanges, 
+                            Converter={StaticResource booleanToVisibilityConverter}}"/>
+                        <Button Command="{Binding CloseDetailViewCommand}"
+                                VerticalContentAlignment="Top" Margin="5 0 2 2"
+                                Content="x" FontSize="16"/>
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
+    </Grid>
+</Controls:MetroWindow>
