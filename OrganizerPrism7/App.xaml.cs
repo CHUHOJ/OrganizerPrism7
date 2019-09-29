@@ -2,7 +2,6 @@
 using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
-using Autofac;
 using OrganizerPrism7.DataAccess;
 using OrganizerPrism7.UI.Data.Lookups;
 using OrganizerPrism7.UI.Data.Repositories;

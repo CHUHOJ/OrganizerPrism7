@@ -47,7 +47,7 @@
                              DataContext="{Binding NavigationViewModel}"/>
         <TabControl Grid.Row="1"
                     Grid.Column="1"
-                    ItemsSource="{Binding DetailViewModels}"
+                    ItemsSource="{Binding DetailViewModels}" Margin="10"
                     SelectedItem="{Binding SelectedDetailViewModel, Mode=TwoWay}">
             <TabControl.ItemContainerStyle>
                 <Style TargetType="TabItem"

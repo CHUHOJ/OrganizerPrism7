@@ -1,5 +1,4 @@
-﻿using Autofac.Features.Indexed;
-using OrganizerPrism7.UI.Event;
+﻿using OrganizerPrism7.UI.Event;
 using OrganizerPrism7.UI.Views.Services;
 using OrganizerPrism7.UI.ViewModel;
 using Prism.Commands;

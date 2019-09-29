@@ -60,7 +60,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Bootstrap.cs" />
     <Compile Include="Data\Lookups\IMeetingLookupDataService.cs" />
     <Compile Include="Data\Lookups\IPersonLookupDataService.cs" />
     <Compile Include="Data\Lookups\IProgrammingLanguageDataService.cs" />
@@ -140,9 +139,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac">
-      <Version>4.9.4</Version>
-    </PackageReference>
     <PackageReference Include="EntityFramework">
       <Version>6.3.0</Version>
     </PackageReference>
