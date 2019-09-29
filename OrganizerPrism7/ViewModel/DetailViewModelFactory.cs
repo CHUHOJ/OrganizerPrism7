@@ -1,8 +1,4 @@
-﻿
-using Prism.Events;
-using OrganizerPrism7.UI.Data.Lookups;
-using OrganizerPrism7.UI.Data.Repositories;
-using OrganizerPrism7.UI.Views.Services;
+﻿using System;
 
 namespace OrganizerPrism7.UI.ViewModel
 {
@@ -14,23 +10,17 @@ namespace OrganizerPrism7.UI.ViewModel
 
     public class DetailViewModelFactory : IDetailViewModelFactory
     {
-        IEventAggregator _eventAggregator;
-        IMessageDialogService _messageDialogService;
-        IMeetingRepository _meetingRepository;
-        IPersonRepository _personRepository;
-        IProgrammingLanguageRepository _programmingLanguageRepository;
-        IProgrammingLanguageDataService _programmingLanguageDataService;
+        private readonly Func<IPersonDetailViewModel> _personDetailVMCreator;
 
-        public DetailViewModelFactory(IEventAggregator ea, IMessageDialogService messageDialogService, 
-            IMeetingRepository meetingRepository,IPersonRepository personRepository, IProgrammingLanguageRepository programmingLanguageRepository,
-            IProgrammingLanguageDataService programmingLanguageDataService)
+        private readonly Func<IMeetingDetailViewModel> _meetingDetailVMCreator;
+
+        private readonly Func<IProgrammingLanguageDetailViewModel> _programmingLanguageVMCreator;
+
+        public DetailViewModelFactory(Func<IPersonDetailViewModel> personDetailVMCreator, Func<IMeetingDetailViewModel> meetingDetailVMCreator, Func<IProgrammingLanguageDetailViewModel> programmingLanguageVMCreator)
         {
-            _eventAggregator = ea;
-            _messageDialogService = messageDialogService;
-            _meetingRepository = meetingRepository;
-            _personRepository = personRepository;
-            _programmingLanguageRepository = programmingLanguageRepository;
-            _programmingLanguageDataService = programmingLanguageDataService;
+            _personDetailVMCreator = personDetailVMCreator;
+            _meetingDetailVMCreator = meetingDetailVMCreator;
+            _programmingLanguageVMCreator = programmingLanguageVMCreator;
         }
 
         public IDetailViewModel GetDetailViewModel(string detailViewModelName)
@@ -40,13 +30,13 @@ namespace OrganizerPrism7.UI.ViewModel
             switch (detailViewModelName)
             {
                 case nameof(MeetingDetailViewModel):
-                    vm = new MeetingDetailViewModel(_eventAggregator,_messageDialogService, _meetingRepository);
+                    vm = _meetingDetailVMCreator();
                     break;
                 case nameof(PersonDetailViewModel):
-                    vm = new PersonDetailViewModel(_personRepository,_eventAggregator,_messageDialogService,_programmingLanguageDataService);
+                    vm = _personDetailVMCreator();
                     break;
                 case nameof(ProgrammingLanguageDetailViewModel):
-                    vm = new ProgrammingLanguageDetailViewModel(_eventAggregator,_messageDialogService,_programmingLanguageRepository);
+                    vm = _programmingLanguageVMCreator();
                     break;
                 default:
                     vm = null;

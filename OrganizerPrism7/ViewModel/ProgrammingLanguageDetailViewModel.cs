@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace OrganizerPrism7.UI.ViewModel
 {
-    public class ProgrammingLanguageDetailViewModel : DetailViewModelBase
+    public class ProgrammingLanguageDetailViewModel : DetailViewModelBase, IProgrammingLanguageDetailViewModel
     {
         private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
         private ProgrammingLanguageWrapper _selectedProgrammingLanguage;

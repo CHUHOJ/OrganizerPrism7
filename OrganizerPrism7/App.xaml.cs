@@ -20,23 +20,28 @@ namespace OrganizerPrism7.UI
         protected override Window CreateShell()
         {
             return Container.Resolve<MainWindow>();
-            
+
         }
 
-    protected override void RegisterTypes(IContainerRegistry containerRegistry)
-    {
-        containerRegistry.Register<OrganizerDbContext>();
-        containerRegistry.Register<IMessageDialogService, MessageDialogService>();
-        containerRegistry.Register<INavigationViewModel, NavigationViewModel>();
-        containerRegistry.Register<IMeetingLookupDataService, LookupDataService>();
-        containerRegistry.Register<IPersonLookupDataService, LookupDataService>();
-        containerRegistry.Register<IProgrammingLanguageDataService, LookupDataService>();
-        containerRegistry.Register<IPersonRepository, PersonRepository>();
-        containerRegistry.Register<IMeetingRepository, MeetingRepository>();
-        containerRegistry.Register<IProgrammingLanguageRepository, ProgrammingLanguageRepository>();
-        containerRegistry.Register<IDetailViewModelFactory, DetailViewModelFactory>();
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.Register<OrganizerDbContext>();
+            containerRegistry.Register<IMessageDialogService, MessageDialogService>();
+            containerRegistry.Register<INavigationViewModel, NavigationViewModel>();
 
-    }
+            containerRegistry.Register<IMeetingLookupDataService, LookupDataService>();
+            containerRegistry.Register<IPersonLookupDataService, LookupDataService>();
+            containerRegistry.Register<IProgrammingLanguageDataService, LookupDataService>();
+            containerRegistry.Register<IPersonRepository, PersonRepository>();
+            containerRegistry.Register<IMeetingRepository, MeetingRepository>();
+            containerRegistry.Register<IProgrammingLanguageRepository, ProgrammingLanguageRepository>();
+
+            containerRegistry.Register<IMeetingDetailViewModel, MeetingDetailViewModel>();
+            containerRegistry.Register<IPersonDetailViewModel, PersonDetailViewModel>();
+            containerRegistry.Register<IProgrammingLanguageDetailViewModel, ProgrammingLanguageDetailViewModel>();
+            containerRegistry.Register<IDetailViewModelFactory, DetailViewModelFactory>();
+
+        }
 
 
     }
